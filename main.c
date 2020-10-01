@@ -15,6 +15,12 @@ int main(void) {
   }
 
   Node *root = kd_build(list, num_points);
+  Node *nearest;
+  Point pnt;
+  pnt.x = 10.0;
+  pnt.y = 10.0;
+  printf("Dist: %f\r\n", kd_find_nearest(root, &pnt, &nearest));
+  printf("Nearest: (%f, %f)\r\n", nearest->loc.x, nearest->loc.y);
 
   // TODO free Node list
   free(list);

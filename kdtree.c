@@ -8,6 +8,8 @@
 ******************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
+#include <float.h>
 
 #include "kdtree.h"
 #include "kd_internals.h"
@@ -45,8 +47,7 @@ Node *kd_build(const float *points, uint32_t n_points)
 
 float kd_find_nearest(Node *kdtree, const Point *loc, Node **nearest)
 {
-    /// TODO
-    return 0.0;
+    return kd_nearest_recurse(kdtree, loc, FLT_MAX, nearest, 0);
 }
 
 /* -------- Internal Function Definitions -------- */
@@ -75,6 +76,25 @@ Node *kd_build_recurse(Node *list, uint32_t min, uint32_t max, uint8_t depth)
 
 float kd_nearest_recurse(Node *tree, const Point *loc, float min_dist, Node **best, uint8_t depth)
 {
-    /// TODO
-    return 0.0;
+    if (tree == NULL) {
+      return min_dist;
+    }
+
+    float this_dist = fabs(loc->x - tree->loc.x) + fabs(loc->y - tree->loc.y);
+    if (this_dist < min_dist) {
+      *best = tree;
+      min_dist = this_dist;
+    }
+
+    float left_dist, right_dist;
+    left_dist = kd_nearest_recurse(tree->left, loc, min_dist, best, depth+1);
+    if (left_dist < min_dist) {
+      min_dist = left_dist;
+    }
+    right_dist = kd_nearest_recurse(tree->right, loc, min_dist, best, depth+1);
+    if (right_dist < min_dist) {
+      min_dist = right_dist;
+    }
+
+    return min_dist;
 }
