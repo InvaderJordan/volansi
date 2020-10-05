@@ -17,7 +17,7 @@
 
 /* -------- External Function Definitions -------- */
 
-static void print_tree_recurse(Node *node) {
+__attribute__ ((unused)) static void print_tree_recurse(Node *node) {
   if (node == NULL) {
     return;
   }
@@ -40,7 +40,7 @@ Node *kd_build(const float *points, uint32_t n_points)
 
     Node *root = kd_build_recurse(list, 0, n_points, 0);
     //printf("Root: (%f, %f) %d\r\n", root->loc.x, root->loc.y, root->loc.id);
-    print_tree_recurse(root);
+    //print_tree_recurse(root);
 
     return root;
 }

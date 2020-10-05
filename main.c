@@ -4,7 +4,7 @@
 #include "kdtree.h"
 
 int main(void) {
-  FILE *fp = fopen("sample_a.csv", "r");
+  FILE *fp = fopen("sample_c.csv", "r");
   int num_points;
   fscanf(fp, "%d", &num_points);
 
@@ -17,8 +17,12 @@ int main(void) {
   Node *root = kd_build(list, num_points);
   Node *nearest;
   Point pnt;
-  pnt.x = 10.0;
-  pnt.y = 10.0;
+  printf("Enter coordinates for nearest point:\r\n");
+  printf("X: ");
+  scanf("%f", &pnt.x);
+  printf("Y: ");
+  scanf("%f", &pnt.y);
+
   printf("Dist: %f\r\n", kd_find_nearest(root, &pnt, &nearest));
   printf("Nearest: (%f, %f)\r\n", nearest->loc.x, nearest->loc.y);
 
